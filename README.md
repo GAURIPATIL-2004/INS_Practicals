@@ -34,4 +34,4 @@ Table of Contents
 10. MAC Function
 
 
-11. HMAC Function# INS_Practicals
+11. HMAC Function
