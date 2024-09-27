@@ -1,0 +1,15 @@
+q=int(input("Enter value of q :"))
+a=int(input("Enter value of alpha :"))
+Xa=int(input("Enter value of alpha :"))
+Xb=int(input("Enter value of alpha :"))
+Ya=pow(a,Xa,q)
+print("Ya :" ,Ya)
+
+Yb=pow(a,Xb,q)
+print("Ya :" ,Yb)
+
+kb=pow(Ya,Xb,q)
+
+ka=pow(Yb,Xa,q)
+print("ka :" ,ka)
+print("kb :" ,kb)
