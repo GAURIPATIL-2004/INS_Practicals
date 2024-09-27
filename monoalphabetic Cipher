@@ -1,0 +1,41 @@
+import random
+
+alpha = "abcdefghijklmnopqrstuvwxyz"
+
+def encrypt(original, key=None):
+    if key is None:  # Generate a random key if none is provided
+        l = list(alpha)
+        random.shuffle(l)
+        key = "".join(l)
+
+    new = []
+    for letter in original:
+        if letter in alpha:  # Only encrypt alphabetic characters
+            new.append(key[alpha.index(letter)])
+        else:
+            new.append(letter)  # Non-alphabetic characters remain unchanged
+
+    return ["".join(new), key]
+
+def decrypt(cipher, key):
+    new = []
+    for letter in cipher:
+        if letter in key:  # Only decrypt if the letter is in the key
+            new.append(alpha[key.index(letter)])
+        else:
+            new.append(letter)  # Non-alphabetic characters remain unchanged
+
+    return "".join(new)
+
+def main():
+    text = input("Enter plain text: ").lower()  # Convert input to lowercase
+    e = encrypt(text)  # Encrypt the text
+    print("\nEncrypted message and key:")
+    print("Encrypted message:", e[0])
+    print("Key:", e[1])
+
+    decrypted_message = decrypt(e[0], e[1])  # Decrypt the message
+    print("\nDecrypted message:", decrypted_message)
+
+if __name__ == "__main__":
+    main()
