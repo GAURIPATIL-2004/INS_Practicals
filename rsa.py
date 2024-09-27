@@ -1,44 +1,28 @@
-import math
- 
-# step 1
-p = 3
-q = 7
- 
-# step 2
-n = p*q
-print("n =", n)
- 
-# step 3
-phi = (p-1)*(q-1)
- 
-# step 4
-e = 2
-while(e<phi):
-    if (math.gcd(e, phi) == 1):
-        break
-    else:
-        e += 1
- 
-print("e =", e)
-# step 5
-k = 2
-d = ((k*phi)+1)/e
-print("d =", d)
-print(f'Public key: {e, n}')
-print(f'Private key: {d, n}')
- 
-# plain text
-msg = 11
-print(f'Original message:{msg}')
- 
-# encryption
-C = pow(msg, e)
-C = math.fmod(C, n)
-print(f'Encrypted message: {C}')
- 
-# decryption
-M = pow(C, d)
-M = math.fmod(M, n)
- 
-print(f'Decrypted message: {M}')      
+P=int(input("Enter value of P ="))
+Q=int(input("Enter value of Q ="))
+e=int(input("Enter value of e ="))
+n=P*Q
 
+print("n= ",n)
+
+i=1
+M=int(input("Enter value of M ="))
+de=0
+d=0
+phi_n=(P-1)*(Q-1)
+print("Phi of n =",phi_n)
+while True :
+     if ((phi_n*i)+1)%e==0:
+         print("True",i,"d*e=",((phi_n*i)+1),"d=",(phi_n*i+1)/e)
+         de=((phi_n*i)+1)
+         d=(phi_n*i+1)/e
+         break
+     else:
+         i+=1
+         print("False")
+
+if de%phi_n==1:
+    C=(M**e)%n
+    print("Cipher Text =",C)
+    M=(C**int(d))%n
+    print("M = ",M)
