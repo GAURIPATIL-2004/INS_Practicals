@@ -1,41 +1,23 @@
-import random
+import string
 
-alpha = "abcdefghijklmnopqrstuvwxyz"
+print("Monoalphabetic Cipher ")
 
-def encrypt(original, key=None):
-    if key is None:  # Generate a random key if none is provided
-        l = list(alpha)
-        random.shuffle(l)
-        key = "".join(l)
+plain_text=input("Enter the message : ")
+key="hijklpqrsmnoefgtuvwxyzabcd"
+cipher=""
 
-    new = []
-    for letter in original:
-        if letter in alpha:  # Only encrypt alphabetic characters
-            new.append(key[alpha.index(letter)])
-        else:
-            new.append(letter)  # Non-alphabetic characters remain unchanged
+for c in plain_text:
+    if c in string.ascii_lowercase:
+        index=ord(c)-ord('a')
+        cipher=cipher+key[index]
+    else:
+        cipher=cipher+c
+        
 
-    return ["".join(new), key]
 
-def decrypt(cipher, key):
-    new = []
-    for letter in cipher:
-        if letter in key:  # Only decrypt if the letter is in the key
-            new.append(alpha[key.index(letter)])
-        else:
-            new.append(letter)  # Non-alphabetic characters remain unchanged
+print("Key : ",key)
 
-    return "".join(new)
+print("Encrypted Text : ",cipher)
 
-def main():
-    text = input("Enter plain text: ").lower()  # Convert input to lowercase
-    e = encrypt(text)  # Encrypt the text
-    print("\nEncrypted message and key:")
-    print("Encrypted message:", e[0])
-    print("Key:", e[1])
-
-    decrypted_message = decrypt(e[0], e[1])  # Decrypt the message
-    print("\nDecrypted message:", decrypted_message)
-
-if __name__ == "__main__":
-    main()
+print("Decrypted Text : ",plain_text)
+          
