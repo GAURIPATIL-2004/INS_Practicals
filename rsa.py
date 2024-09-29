@@ -1,28 +1,37 @@
-P=int(input("Enter value of P ="))
-Q=int(input("Enter value of Q ="))
-e=int(input("Enter value of e ="))
-n=P*Q
+from math import gcd
 
-print("n= ",n)
+# defining a function to perform RSA approch
+def RSA(p: int, q: int, message: int):
+    # calculating n
+    n = p * q
 
-i=1
-M=int(input("Enter value of M ="))
-de=0
-d=0
-phi_n=(P-1)*(Q-1)
-print("Phi of n =",phi_n)
-while True :
-     if ((phi_n*i)+1)%e==0:
-         print("True",i,"d*e=",((phi_n*i)+1),"d=",(phi_n*i+1)/e)
-         de=((phi_n*i)+1)
-         d=(phi_n*i+1)/e
-         break
-     else:
-         i+=1
-         print("False")
+    # calculating totient, t
+    t = (p - 1) * (q - 1)
 
-if de%phi_n==1:
-    C=(M**e)%n
-    print("Cipher Text =",C)
-    M=(C**int(d))%n
-    print("M = ",M)
+    # selecting public key, e
+    for i in range(2, t):
+        if gcd(i, t) == 1:
+            e = i
+            break
+    
+    # selecting private key, d
+    j = 0
+    while True:
+        if (j * e) % t == 1:
+            d = j
+            break
+        j += 1
+
+    # performing encryption
+    ct = (message ** e) % n
+    print(f"Encrypted message is {ct}")
+
+    # performing decryption
+    mes = (ct ** d) % n
+    print(f"Decrypted message is {mes}")
+
+# Testcase - 1
+RSA(p=53, q=59, message=89)
+
+# Testcase - 2
+#RSA(p=3, q=7, message=12)
