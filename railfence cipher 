@@ -1,0 +1,23 @@
+def main():
+	layers=int(input("enter the number of layers "))
+	plain=input("enter the plain text ")
+	ciphertext=encrypt(layers,plain)
+	print("Encrypted message", ciphertext)
+	
+	
+def encrypt(layers,plain):
+	plain=plain.replace(" "," ")
+	plain=plain.upper()
+	rail=[" "]*layers
+	layer=0
+	for char in plain:
+		rail[layer]+=char
+		if layer>=1:
+			layer=0
+		else:
+			layer+=1
+			
+	cipher=" ".join(rail)
+	return cipher
+if  __name__ =="__main__":
+	main()
