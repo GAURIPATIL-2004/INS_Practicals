@@ -1,37 +1,36 @@
-from math import gcd
+import math
 
-# defining a function to perform RSA approch
-def RSA(p: int, q: int, message: int):
-    # calculating n
-    n = p * q
+# Step 1: User inputs for p, q, and message
+p = int(input("Enter a prime value for p: "))
+q = int(input("Enter a prime value for q: "))
+msg = int(input("Enter the message (integer): "))
 
-    # calculating totient, t
-    t = (p - 1) * (q - 1)
+# Step 2: Calculate n
+n = p * q
+print("n =", n)
 
-    # selecting public key, e
-    for i in range(2, t):
-        if gcd(i, t) == 1:
-            e = i
-            break
-    
-    # selecting private key, d
-    j = 0
-    while True:
-        if (j * e) % t == 1:
-            d = j
-            break
-        j += 1
+# Step 3: Calculate phi (Euler's Totient)
+phi = (p - 1) * (q - 1)
 
-    # performing encryption
-    ct = (message ** e) % n
-    print(f"Encrypted message is {ct}")
+# Step 4: Find public exponent e (smallest coprime to phi)
+e = 2
+while e < phi:
+    if math.gcd(e, phi) == 1:
+        break
+    e += 1
+print("e =", e)
 
-    # performing decryption
-    mes = (ct ** d) % n
-    print(f"Decrypted message is {mes}")
+# Step 5: Calculate private key d
+k = 2  # A constant multiplier, can be adjusted
+d = int(((k * phi) + 1) / e)
+print("d =", d)
+print(f'Public key: ({e}, {n})')
+print(f'Private key: ({d}, {n})')
 
-# Testcase - 1
-RSA(p=53, q=59, message=89)
+# Encryption
+C = pow(msg, e, n)  # Encrypt the message
+print(f'Encrypted message: {C}')
 
-# Testcase - 2
-#RSA(p=3, q=7, message=12)
+# Decryption
+M = pow(C, d, n)  # Decrypt the message
+print(f'Decrypted message: {M}')
