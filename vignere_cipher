@@ -1,33 +1,20 @@
-def generateKey(string, key):
-    key = list(key)
-    if len(string) == len(key):
-        return "".join(key)
-    else:
-        for i in range(len(string) - len(key)):
-            key.append(key[i % len(key)])
-    return "".join(key)
+def generate_key(text, key):
+    return (key * (len(text) // len(key))) + key[:len(text) % len(key)]
 
-def encryption(string, key):
-    encrypt_text = []
-    for i in range(len(string)):
-        x = (ord(string[i]) + ord(key[i]) - 2 * ord('A')) % 26
-        encrypt_text.append(chr(x + ord('A')))
-    return "".join(encrypt_text)
+def vigenere_encrypt(text, key):
+    return ''.join(chr((ord(t) + ord(k) - 2 * ord('A')) % 26 + ord('A')) for t, k in zip(text, key))
 
-def decryption(encrypt_text, key):
-    orig_text = []
-    for i in range(len(encrypt_text)):
-        x = (ord(encrypt_text[i]) - ord(key[i]) + 26) % 26
-        orig_text.append(chr(x + ord('A')))
-    return "".join(orig_text)
+def vigenere_decrypt(cipher, key):
+    return ''.join(chr((ord(c) - ord(k) + 26) % 26 + ord('A')) for c, k in zip(cipher, key))
 
-if __name__ == "__main__":
-    string = input("Enter the message: ").upper().replace(" ", "")
-    keyword = input("Enter the keyword: ").upper()
-    key = generateKey(string, keyword)
-    
-    encrypt_text = encryption(string, key)
-    print("Encrypted message:", encrypt_text)
-    
-    decrypted_text = decryption(encrypt_text, key)
-    print("Decrypted message:", decrypted_text)
+# User Input
+text = input("Enter message: ").upper().replace(" ", "")
+keyword = input("Enter keyword: ").upper()
+
+# Encryption and Decryption
+key = generate_key(text, keyword)
+cipher_text = vigenere_encrypt(text, key)
+print("Encrypted Message:", cipher_text)
+
+decrypted_text = vigenere_decrypt(cipher_text, key)
+print("Decrypted Message:", decrypted_text)
