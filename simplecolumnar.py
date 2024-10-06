@@ -1,27 +1,15 @@
-def split_len(seq, length):
-    # Split the plaintext into chunks of length equal to the length of the key
-    return [seq[i:i + length] for i in range(0, len(seq), length)]
-
 def encode(key, plaintext):
-    # Map the key digits to their order in the key
-    order = {int(val): num for num, val in enumerate(key)}
+    # Step 1: Create columns based on key length
+    cols = [''] * len(key)
+    for i, c in enumerate(plaintext):
+        cols[i % len(key)] += c
     
-    ciphertext = ''
+    # Step 2: Sort columns based on the order of the key
+    ordered_cols = [cols[i] for i in sorted(range(len(key)), key=lambda k: key[k])]
     
-    # Sort the key in ascending order and build the ciphertext
-    for index in sorted(order.keys()):
-        for part in split_len(plaintext, len(key)):
-            try:
-                ciphertext += part[order[index]]
-            except IndexError:
-                # Handle cases where a part is shorter than the key length
-                continue
-    
-    return ciphertext
+    # Step 3: Combine the columns to get the encoded message
+    return ''.join(ordered_cols)
 
-# Input handling
-key = input("Enter the number sequence as key: ")  # Example: '3142'
+key = input("Enter the key: ")
 plain = input("Enter the message: ")
-
-# Output the encoded message
 print("Encoded message:", encode(key, plain))
