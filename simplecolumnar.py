@@ -1,13 +1,20 @@
-import random
+def encrypt_message(message, key):
+    message = message.replace(" ", "").upper()
+    num_cols = len(key)
+    num_rows = len(message) // num_cols + (len(message) % num_cols != 0)
+    grid = ['' for _ in range(num_cols)]
+    
+    for idx, char in enumerate(message):
+        col = idx % num_cols
+        grid[col] += char
 
-# This is your main code block.
-message = input("Enter message: ")  # Prompt user for a message
-key = input("What is your key: ")    # Prompt user for a key
+    sorted_key_indices = sorted(range(len(key)), key=lambda x: key[x])
+    encrypted_message = ''.join(grid[i] for i in sorted_key_indices)
+    
+    return encrypted_message
 
-random.seed(str(key))  # Seed the random generator with the key
+message = input("Enter message: ")
+key = input("What is your key: ")
 
-# Shuffle the characters of the message
-r = ''.join(random.sample(message, len(message)))
-
-# Print the shuffled message as one word
-print("Shuffled message:", r)
+encrypted_message = encrypt_message(message, key)
+print("Encrypted message:", encrypted_message)
